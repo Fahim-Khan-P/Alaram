@@ -61,7 +61,7 @@ you can use the time module to handle time related operations.
 
 > Add a link to your deployed project.
 
-- [Live Demo Link](https://google.com)
+- [Live Demo Link](https://fahim-khan-p.github.io/Alaram/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
