@@ -46,13 +46,18 @@ setInterval(() => {
   if (alarmTime === `${h}:${m} ${ampm}`) {
     ringtone.play();
     ringtone.loop = true;
-    notification.textContent = "Ringing";
+    notification.textContent = "Ringing...";
+    notification.classList.add('ringing')
   } else if (alarmTime) {
     notification.textContent = "Alarm is already set";
+    notification.classList.remove("ringing");
   } else {
     notification.textContent = "Please set Alarm!";
+    notification.classList.remove("ringing");
   }
+  
 });
+
 
 let alarmTime = "";
 
@@ -62,6 +67,7 @@ function setAlarm() {
     ringtone.pause();
     setAlarmBtn.textContent = "Set Alarm";
     notification.textContent = "Please set Alarm!";
+    notification.classList.remove("ringing");
   } else {
     const hour = hourSelect.value;
     const minute = minuteSelect.value;

@@ -83,6 +83,27 @@ body {
   pointer-events: none;
 }
 
+.ringing {
+  animation: ringing-animation 1s infinite;
+  color: #ff0000;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+@keyframes ringing-animation {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @media (max-width: 500px) {
   #clock-parent-div {
