@@ -83,6 +83,7 @@ body {
   pointer-events: none;
 }
 
+
 @media (max-width: 500px) {
   #clock-parent-div {
     width: 100%;

@@ -46,6 +46,11 @@ setInterval(() => {
   if (alarmTime === `${h}:${m} ${ampm}`) {
     ringtone.play();
     ringtone.loop = true;
+    notification.textContent = "Ringing";
+  } else if (alarmTime) {
+    notification.textContent = "Alarm is already set";
+  } else {
+    notification.textContent = "Please set Alarm!";
   }
 });
 
@@ -55,21 +60,21 @@ function setAlarm() {
   if (alarmTime) {
     alarmTime = "";
     ringtone.pause();
-    content.classList.remove("disable");
     setAlarmBtn.textContent = "Set Alarm";
+    notification.textContent = "Please set Alarm!";
   } else {
     const hour = hourSelect.value;
     const minute = minuteSelect.value;
     const ampm = ampmSelect.value;
 
     if ([hour, minute, ampm].includes("Hour") || [hour, minute, ampm].includes("Minute") || [hour, minute, ampm].includes("AM/PM")) {
-      alert("invalid time!");
+      alert("Invalid time!");
       return;
     }
 
     alarmTime = `${hour}:${minute} ${ampm}`;
-    content.classList.add("disable");
     setAlarmBtn.textContent = "Clear Alarm";
+    notification.textContent = "Alarm is already set";
   }
 }
 
