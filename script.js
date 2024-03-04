@@ -7,23 +7,17 @@ const notification = document.getElementById("notification");
 const ringtone = new Audio("ring.mp3");
 
 for (let i = 12; i > 0; i--) {
-  const option = document.createElement("option");
-  option.value = i < 10 ? `0${i}` : i;
-  option.textContent = i < 10 ? `0${i}` : i;
+  const option = createOption(i);
   hourSelect.appendChild(option);
 }
 
 for (let i = 59; i >= 0; i--) {
-  const option = document.createElement("option");
-  option.value = i < 10 ? `0${i}` : i;
-  option.textContent = i < 10 ? `0${i}` : i;
+  const option = createOption(i);
   minuteSelect.appendChild(option);
 }
 
 ["AM", "PM"].forEach((ampm) => {
-  const option = document.createElement("option");
-  option.value = ampm;
-  option.textContent = ampm;
+  const option = createOption(ampm);
   ampmSelect.appendChild(option);
 });
 
@@ -41,13 +35,12 @@ setInterval(() => {
   h = h === 0 ? 12 : h;
   h = h < 10 ? `0${h}` : h;
 
-  currentTime.textContent = `${h}:${m < 10 ? `0${m}` : m}:${s < 10 ? `0${s}` : s} ${ampm}`;
+  currentTime.textContent = `${h}:${formatTime(m)}:${formatTime(s)} ${ampm}`;
 
-  if (alarmTime === `${h}:${m} ${ampm}`) {
-    ringtone.play();
-    ringtone.loop = true;
+  if (alarmTime === `${h}:${formatTime(m)} ${ampm}`) {
+    playRingtone();
     notification.textContent = "Ringing...";
-    notification.classList.add('ringing')
+    notification.classList.add('ringing');
   } else if (alarmTime) {
     notification.textContent = "Alarm is already set";
     notification.classList.remove("ringing");
@@ -55,33 +48,50 @@ setInterval(() => {
     notification.textContent = "Please set Alarm!";
     notification.classList.remove("ringing");
   }
-  
-});
-
+}, 1000);
 
 let alarmTime = "";
 
 function setAlarm() {
   if (alarmTime) {
-    alarmTime = "";
-    ringtone.pause();
-    setAlarmBtn.textContent = "Set Alarm";
-    notification.textContent = "Please set Alarm!";
-    notification.classList.remove("ringing");
+    clearAlarm();
   } else {
     const hour = hourSelect.value;
     const minute = minuteSelect.value;
     const ampm = ampmSelect.value;
 
-    if ([hour, minute, ampm].includes("Hour") || [hour, minute, ampm].includes("Minute") || [hour, minute, ampm].includes("AM/PM")) {
-      alert("Invalid time!");
-      return;
-    }
-
     alarmTime = `${hour}:${minute} ${ampm}`;
     setAlarmBtn.textContent = "Clear Alarm";
     notification.textContent = "Alarm is already set";
   }
+}
+
+function clearAlarm() {
+  alarmTime = "";
+  pauseRingtone();
+  setAlarmBtn.textContent = "Set Alarm";
+  notification.textContent = "Please set Alarm!";
+  notification.classList.remove("ringing");
+}
+
+function playRingtone() {
+  ringtone.play();
+  ringtone.loop = true;
+}
+
+function pauseRingtone() {
+  ringtone.pause();
+}
+
+function createOption(value) {
+  const option = document.createElement("option");
+  option.value = formatTime(value);
+  option.textContent = formatTime(value);
+  return option;
+}
+
+function formatTime(time) {
+  return time < 10 ? `0${time}` : time;
 }
 
 setAlarmBtn.addEventListener("click", setAlarm);
