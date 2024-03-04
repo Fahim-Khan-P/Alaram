@@ -6,16 +6,18 @@ const setAlarmBtn = document.getElementById("setAlarmBtn");
 const notification = document.getElementById("notification");
 const ringtone = new Audio("ring.mp3");
 
-for (let i = 12; i > 0; i--) {
-  const option = createOption(i);
-  hourSelect.appendChild(option);
-}
+Array.from({ length: 12 }, (_, i) => 12 - i)
+  .forEach((value) => {
+    const option = createOption(value);
+    hourSelect.appendChild(option);
+  });
 
-for (let i = 59; i >= 0; i--) {
-  const option = createOption(i);
-  minuteSelect.appendChild(option);
-}
-
+Array.from({ length: 60 }, (_, i) => 59 - i)
+  .forEach((value) => {
+    const option = createOption(value);
+    minuteSelect.appendChild(option);
+  });
+  
 ["AM", "PM"].forEach((ampm) => {
   const option = createOption(ampm);
   ampmSelect.appendChild(option);
